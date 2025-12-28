@@ -25,6 +25,11 @@ func main() {
 	// fmt.Println("Future Value: ", futureValue)
 	// fmt.Println("Future Value (Adjust it for inflation rate): ", futureRealValue)
 
-	fmt.Printf("Future Value: %.1f\n", futureValue)
-	fmt.Printf("Future Value (Adjust it for inflation rate): %.1f\n", futureRealValue)
+	// fmt.Printf("Future Value: %.1f\n", futureValue)
+	// fmt.Printf("Future Value (Adjust it for inflation rate): %.1f\n", futureRealValue)
+
+	formattedFV := fmt.Sprintf("Future Value: %.1f\n", futureValue)
+	formattedRFV := fmt.Sprintf("Future Value (Adjust it for inflation rate): %.1f\n", futureRealValue)
+
+	fmt.Print(formattedFV, formattedRFV)
 }
