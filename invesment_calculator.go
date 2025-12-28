@@ -33,3 +33,9 @@ func main() {
 
 	fmt.Print(formattedFV, formattedRFV)
 }
+
+func outputText(text string) string {
+	fmt.Print(text)
+
+	return text
+}
