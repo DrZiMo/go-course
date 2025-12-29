@@ -1,0 +1,42 @@
+package main
+
+import "fmt"
+
+func main() {
+	var accountBalance = 1000.0
+
+	fmt.Println("Welcome to Go Bank!")
+	fmt.Println("What do you want to do?")
+	fmt.Println("1. Check Balance")
+	fmt.Println("2. Deposit Money")
+	fmt.Println("3. Withdraw Money")
+	fmt.Println("4. Exit")
+
+	var choice int
+	fmt.Print("Enter your choice: ")
+	fmt.Scan(&choice)
+
+	if choice == 1 {
+		fmt.Printf("Your current balance is: $%.2f\n", accountBalance)
+	} else if choice == 2 {
+		var depositAmount float64
+		fmt.Print("Enter amount to deposit: ")
+		fmt.Scan(&depositAmount)
+		accountBalance += depositAmount
+		fmt.Printf("Successfully deposited $%.2f. New balance is: $%.2f\n", depositAmount, accountBalance)
+	} else if choice == 3 {
+		var withdrawAmount float64
+		fmt.Print("Enter amount to withdraw: ")
+		fmt.Scan(&withdrawAmount)
+		if withdrawAmount > accountBalance {
+			fmt.Println("Insufficient funds!")
+		} else {
+			accountBalance -= withdrawAmount
+			fmt.Printf("Successfully withdrew $%.2f. New balance is: $%.2f\n", withdrawAmount, accountBalance)
+		}
+	} else if choice == 4 {
+		fmt.Println("Thank you for banking with us. Goodbye!")
+	} else {
+		fmt.Println("Invalid choice. Please try again.")
+	}
+}
