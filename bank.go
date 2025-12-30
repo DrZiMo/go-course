@@ -18,9 +18,10 @@ func main() {
 		fmt.Print("Enter your choice: ")
 		fmt.Scan(&choice)
 
-		if choice == 1 {
+		switch choice {
+		case 1:
 			fmt.Printf("Your current balance is: $%.2f\n", accountBalance)
-		} else if choice == 2 {
+		case 2:
 			var depositAmount float64
 			fmt.Print("Enter amount to deposit: ")
 			fmt.Scan(&depositAmount)
@@ -32,7 +33,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Printf("Successfully deposited $%.2f. New balance is: $%.2f\n", depositAmount, accountBalance)
-		} else if choice == 3 {
+		case 3:
 			var withdrawAmount float64
 			fmt.Print("Enter amount to withdraw: ")
 			fmt.Scan(&withdrawAmount)
@@ -48,11 +49,48 @@ func main() {
 
 			accountBalance -= withdrawAmount
 			fmt.Printf("Successfully withdrew $%.2f. New balance is: $%.2f\n", withdrawAmount, accountBalance)
-		} else if choice == 4 {
+		case 4:
 			fmt.Println("Thank you for banking with us. Goodbye!")
-			break
-		} else {
+			return
+		default:
 			fmt.Println("Invalid choice. Please try again.")
 		}
+
+		// if choice == 1 {
+		// 	fmt.Printf("Your current balance is: $%.2f\n", accountBalance)
+		// } else if choice == 2 {
+		// 	var depositAmount float64
+		// 	fmt.Print("Enter amount to deposit: ")
+		// 	fmt.Scan(&depositAmount)
+
+		// 	if depositAmount <= 0 {
+		// 		fmt.Println("Invalid amount. Must be greater than 0.")
+		// 		continue
+		// 	}
+
+		// 	accountBalance += depositAmount
+		// 	fmt.Printf("Successfully deposited $%.2f. New balance is: $%.2f\n", depositAmount, accountBalance)
+		// } else if choice == 3 {
+		// 	var withdrawAmount float64
+		// 	fmt.Print("Enter amount to withdraw: ")
+		// 	fmt.Scan(&withdrawAmount)
+		// 	if withdrawAmount > accountBalance {
+		// 		fmt.Println("Insufficient funds!")
+		// 		continue
+		// 	}
+
+		// 	if withdrawAmount <= 0 {
+		// 		fmt.Println("Invalid amount. Must be greater than 0.")
+		// 		continue
+		// 	}
+
+		// 	accountBalance -= withdrawAmount
+		// 	fmt.Printf("Successfully withdrew $%.2f. New balance is: $%.2f\n", withdrawAmount, accountBalance)
+		// } else if choice == 4 {
+		// 	fmt.Println("Thank you for banking with us. Goodbye!")
+		// 	break
+		// } else {
+		// 	fmt.Println("Invalid choice. Please try again.")
+		// }
 	}
 }
