@@ -111,8 +111,12 @@ func showExistingNotes() {
 
 	fmt.Println("Existing notes:")
 
-	for index, file := range fileNames {
-		fmt.Printf("%v. %v", index+1, file)
-		fmt.Println()
+	if len(fileNames) > 0 {
+		for index, file := range fileNames {
+			fmt.Printf("%v. %v", index+1, file)
+			fmt.Println()
+		}
+	} else {
+		fmt.Println("No existing notes!")
 	}
 }
