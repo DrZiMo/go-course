@@ -109,7 +109,7 @@ func showExistingNotes() {
 		return
 	}
 
-	fmt.Println("Existing notes:")
+	fmt.Println("Existing notes: ")
 
 	if len(fileNames) > 0 {
 		for index, file := range fileNames {
