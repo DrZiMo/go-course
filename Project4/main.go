@@ -4,7 +4,7 @@ func main() {
 
 }
 
-func add(a, b interface{}) interface{} {
+func add(a, b any) any {
 	aInt, aIsInt := a.(int)
 	bInt, bIsInt := b.(int)
 
