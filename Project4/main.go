@@ -1,16 +1,12 @@
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	result := add(1, 2)
+	fmt.Print(result)
 }
 
-func add(a, b any) any {
-	aInt, aIsInt := a.(int)
-	bInt, bIsInt := b.(int)
-
-	if aIsInt && bIsInt {
-		return aInt + bInt
-	}
-
-	return nil
+func add[T int | float64 | string](a, b T) T {
+	return a + b
 }
