@@ -1,0 +1,17 @@
+package main
+
+import "fmt"
+
+func main() {
+	websites := map[string]string{
+		"Google":              "https://google.com",
+		"Amazon Web Services": "https://aws.com",
+	}
+
+	fmt.Print(websites)
+	fmt.Print(websites["Google"])
+
+	websites["Linkedin"] = "https://linkedin.com"
+
+	fmt.Print(websites["Linkedin"])
+}
