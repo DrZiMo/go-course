@@ -14,4 +14,11 @@ func main() {
 	websites["Linkedin"] = "https://linkedin.com"
 
 	fmt.Print(websites["Linkedin"])
+
+	// using make function
+	courseRating := make(map[string]float64, 3)
+
+	courseRating["Go"] = 4.7
+	courseRating["React"] = 4.6
+	courseRating["JavaScript"] = 5
 }
