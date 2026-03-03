@@ -30,4 +30,9 @@ func main() {
 
 	courseRating.output()
 
+	for key, value := range courseRating {
+		fmt.Println("Key: ", key)
+		fmt.Println("Value: ", value)
+	}
+
 }
