@@ -14,12 +14,12 @@ func main() {
 		"Amazon Web Services": "https://aws.com",
 	}
 
-	fmt.Print(websites)
-	fmt.Print(websites["Google"])
+	fmt.Println(websites)
+	fmt.Println(websites["Google"])
 
 	websites["Linkedin"] = "https://linkedin.com"
 
-	fmt.Print(websites["Linkedin"])
+	fmt.Println(websites["Linkedin"])
 
 	// using make function
 	courseRating := make(floatMap, 3)
@@ -29,4 +29,5 @@ func main() {
 	courseRating["JavaScript"] = 5
 
 	courseRating.output()
+
 }
