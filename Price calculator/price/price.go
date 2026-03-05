@@ -31,7 +31,7 @@ func (job *TaxIncludedPriceJob) LoadData() {
 	job.InputPrices = prices
 }
 
-func (job *TaxIncludedPriceJob) Processed() {
+func (job *TaxIncludedPriceJob) Processed(doneChan chan bool) {
 	job.LoadData()
 
 	result := make(map[string]string)
@@ -43,6 +43,8 @@ func (job *TaxIncludedPriceJob) Processed() {
 
 	job.TaxIncludedPrice = result
 	job.IOManager.WriteJSON(job)
+
+	doneChan <- true
 }
 
 func NewTaxIncludedPriceJob(fm filemanager.FileManager, taxRate float64) *TaxIncludedPriceJob {
