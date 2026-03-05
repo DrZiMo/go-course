@@ -14,6 +14,7 @@ func slowGreeting(phrase string, doneChan chan bool) {
 	time.Sleep(3 * time.Second)
 	fmt.Println("Hello!", phrase)
 	doneChan <- true
+	close(doneChan)
 }
 
 func main() {
@@ -24,8 +25,7 @@ func main() {
 	go slowGreeting("How ... are ... you?", done)
 	go greet("I kinda liking this course", done)
 
-	<-done
-	<-done
-	<-done
-	<-done
+	for range done {
+
+	}
 }
