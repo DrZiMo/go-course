@@ -6,4 +6,5 @@ func RegisterServer(server *gin.Engine) {
 	server.GET("/events", getEvents)
 	server.GET("/events/:id", getEventById)
 	server.POST("/events", createEvent)
+	server.PUT("/events/:id", updateEvent)
 }
