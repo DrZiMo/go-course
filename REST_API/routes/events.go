@@ -104,7 +104,7 @@ func updateEvent(context *gin.Context) {
 	}
 
 	updatedEvent.ID = eventId
-	err = updatedEvent.UpdateEvent(eventId)
+	err = updatedEvent.Update(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
@@ -115,7 +115,7 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusAccepted, gin.H{
+	context.JSON(http.StatusOK, gin.H{
 		"ok":      true,
 		"Message": "Event updated successfully",
 	})
