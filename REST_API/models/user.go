@@ -109,3 +109,20 @@ func (u User) Update(id int64) error {
 
 	return err
 }
+
+func (u User) Delete(id int64) error {
+	query := `
+	DELETE FROM users
+	WHERE id = ?
+	`
+
+	stmt, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(id)
+
+	return err
+}

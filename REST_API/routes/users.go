@@ -144,6 +144,17 @@ func updateUser(c *gin.Context) {
 		return
 	}
 
+	_, err = models.GetSingleUser(userId)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"ok":      false,
+			"message": "Couldn't find user",
+		})
+
+		return
+	}
+
 	err = user.Update(userId)
 
 	if err != nil {
@@ -162,5 +173,41 @@ func updateUser(c *gin.Context) {
 }
 
 func deleteUser(c *gin.Context) {
+	userId, err := strconv.ParseInt(c.Param("id"), 10, 64)
 
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Couldn't parse user id",
+		})
+
+		return
+	}
+
+	user, err := models.GetSingleUser(userId)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"ok":      false,
+			"message": "Couldn't find user",
+		})
+
+		return
+	}
+
+	err = user.Delete(userId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": "Couldn't update user info",
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok":      true,
+		"message": "User deleted successfully",
+	})
 }
