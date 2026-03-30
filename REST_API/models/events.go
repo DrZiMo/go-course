@@ -14,12 +14,6 @@ type Event struct {
 	UserID      int
 }
 
-type UpdEvent struct {
-	Name        string `binding:"required"`
-	Description string `binding:"required"`
-	Location    string `binding:"required"`
-}
-
 var events = []Event{}
 
 func (e Event) Save() error {
@@ -105,6 +99,24 @@ func (e Event) Update(id int64) error {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(e.Name, e.Description, e.Location, e.DateTime, id)
+
+	return err
+}
+
+func (e Event) Delete(id int64) error {
+	query := `
+	DELETE FROM events WHERE id = ?
+	`
+
+	stmt, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
 
 	return err
 }
