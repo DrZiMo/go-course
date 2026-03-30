@@ -104,7 +104,7 @@ func (e Event) UpdateEvent(id int64) error {
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(query, e.Name, e.Description, e.Description)
+	_, err = stmt.Exec(query, e.Name, e.Description, e.Location, id)
 
 	return err
 }

@@ -115,7 +115,7 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusBadRequest, gin.H{
+	context.JSON(http.StatusAccepted, gin.H{
 		"ok":      true,
 		"Message": "Event updated successfully",
 	})

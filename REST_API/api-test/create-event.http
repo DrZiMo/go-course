@@ -1,1 +1,8 @@
 POST http://localhost:8080/events
+Content-Type: application/json
+
+{
+    "name": "Hackathon",
+    "description": "This is just a hackathon for developers in the world",
+    "location": "Hargeisa"
+}
