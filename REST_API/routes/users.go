@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"rest_api/models"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,6 +23,35 @@ func getUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"ok":    true,
 		"users": users,
+	})
+}
+
+func getSingleUser(c *gin.Context) {
+	userId, err := strconv.ParseInt(c.Param("id"), 10, 64)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Couldn't parse user id",
+		})
+
+		return
+	}
+
+	userInfo, err := models.GetSingleUser(userId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": "Failed to get single user",
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok":   true,
+		"user": userInfo,
 	})
 }
 

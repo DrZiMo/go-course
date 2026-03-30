@@ -5,6 +5,7 @@ import "github.com/gin-gonic/gin"
 func RegisterServer(server *gin.Engine) {
 	// User
 	server.GET("/users", getUsers)
+	server.GET("/users/:id", getSingleUser)
 	server.POST("/users", createUser)
 	server.POST("/users/login", loginUser)
 
