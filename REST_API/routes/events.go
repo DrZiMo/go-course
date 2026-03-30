@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"rest_api/models"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,9 +53,6 @@ func createEvent(context *gin.Context) {
 		})
 		return
 	}
-	event.ID = 1
-	event.UserID = 1
-	event.DateTime = time.Now()
 
 	err = event.Save()
 
