@@ -119,3 +119,39 @@ func loginUser(c *gin.Context) {
 		"user":    userInfo,
 	})
 }
+
+func updateUser(c *gin.Context) {
+	userId, err := strconv.ParseInt(c.Param("id"), 10, 64)
+
+	var user models.User
+	err = c.ShouldBindJSON(&user)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Couldn't parse user data",
+		})
+
+		return
+	}
+
+	err = user.Update(userId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": "Couldn't update user info",
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok":      true,
+		"message": "User updated successfully",
+	})
+}
+
+func deleteUser(c *gin.Context) {
+
+}

@@ -91,3 +91,21 @@ func (u User) Login(email, password string) (*User, error) {
 
 	return &user, nil
 }
+
+func (u User) Update(id int64) error {
+	query := `
+	UPDATE users
+	SET email = ?, password = ?
+	WHERE id = ?
+	`
+
+	stmt, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(u.Email, u.Password, id)
+
+	return err
+}
