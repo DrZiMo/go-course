@@ -7,6 +7,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func getUsers(c *gin.Context) {
+	users, err := models.GetUsers()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Couldn't fetch users",
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok":    true,
+		"users": users,
+	})
+}
+
 func createUser(c *gin.Context) {
 	var user models.User
 	err := c.ShouldBindJSON(&user)
@@ -41,20 +59,33 @@ func createUser(c *gin.Context) {
 	})
 }
 
-func getUsers(c *gin.Context) {
-	users, err := models.GetUsers()
+func loginUser(c *gin.Context) {
+	var user models.User
+	err := c.ShouldBindJSON(&user)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"ok":      false,
-			"message": "Couldn't fetch users",
+			"message": "Couldn't parse requested data",
+		})
+
+		return
+	}
+
+	userInfo, err := user.Login(user.Email, user.Password)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"ok":      false,
+			"message": "Couldn't login user",
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"ok":    true,
-		"users": users,
+		"ok":      true,
+		"message": "logged in successfully",
+		"user":    userInfo,
 	})
 }

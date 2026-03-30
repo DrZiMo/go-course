@@ -10,6 +10,33 @@ type User struct {
 	Password string `binding:"required"`
 }
 
+func GetUsers() ([]User, error) {
+	query := `SELECT * FROM users`
+
+	rows, err := db.DB.Query(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var users []User
+
+	for rows.Next() {
+		var user User
+		err := rows.Scan(&user.ID, &user.Email, &user.Password)
+
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
 func (u User) Save() error {
 	query := `
 	INSERT INTO users (email, password)
@@ -36,29 +63,17 @@ func (u User) Save() error {
 	return err
 }
 
-func GetUsers() ([]User, error) {
-	query := `SELECT * FROM users`
+func (u User) Login(email, password string) (*User, error) {
+	query := `SELECT * FROM users WHERE email = ? AND password = ?`
 
-	rows, err := db.DB.Query(query)
+	row := db.DB.QueryRow(query, email, password)
+
+	var user User
+	err := row.Scan(&user.ID, &user.Email, &user.Password)
 
 	if err != nil {
 		return nil, err
 	}
 
-	defer rows.Close()
-
-	var users []User
-
-	for rows.Next() {
-		var user User
-		err := rows.Scan(&user.ID, &user.Email, &user.Password)
-
-		if err != nil {
-			return nil, err
-		}
-
-		users = append(users, user)
-	}
-
-	return users, nil
+	return &user, nil
 }
