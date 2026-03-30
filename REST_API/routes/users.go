@@ -123,6 +123,15 @@ func loginUser(c *gin.Context) {
 func updateUser(c *gin.Context) {
 	userId, err := strconv.ParseInt(c.Param("id"), 10, 64)
 
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"ok":      false,
+			"message": "Couldn't parse user id",
+		})
+
+		return
+	}
+
 	var user models.User
 	err = c.ShouldBindJSON(&user)
 
