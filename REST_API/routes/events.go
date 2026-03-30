@@ -133,7 +133,7 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventById(eventId)
+	event, err := models.GetEventById(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -144,8 +144,7 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
-	var deletedEvent models.Event
-	err = deletedEvent.Delete(eventId)
+	err = event.Delete(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
