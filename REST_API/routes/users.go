@@ -82,10 +82,6 @@ func createUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"ok":      true,
 		"message": "User created successfully",
-		"user": map[string]interface{}{
-			"email":    user.Email,
-			"password": user.Password,
-		},
 	})
 }
 
