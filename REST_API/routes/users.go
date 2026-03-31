@@ -98,7 +98,7 @@ func loginUser(c *gin.Context) {
 		return
 	}
 
-	userInfo, err := user.Login(user.Email, user.Password)
+	err = user.Login()
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -112,7 +112,6 @@ func loginUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"ok":      true,
 		"message": "logged in successfully",
-		"user":    userInfo,
 	})
 }
 

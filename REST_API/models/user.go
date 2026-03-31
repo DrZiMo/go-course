@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"rest_api/db"
 	"rest_api/utils"
 )
@@ -84,19 +85,25 @@ func (u User) Save() error {
 	return err
 }
 
-func (u User) Login(email, password string) (*User, error) {
-	query := `SELECT * FROM users WHERE email = ? AND password = ?`
+func (u User) Login() error {
+	query := `SELECT password FROM users WHERE email = ?`
 
-	row := db.DB.QueryRow(query, email, password)
+	row := db.DB.QueryRow(query, u.Email)
 
-	var user User
-	err := row.Scan(&user.ID, &user.Email, &user.Password)
+	var retrivedPassword string
+	err := row.Scan(&retrivedPassword)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &user, nil
+	validPassword := utils.CheckPasswordHash(u.Password, retrivedPassword)
+
+	if !validPassword {
+		return errors.New("Credentials invalid")
+	}
+
+	return nil
 }
 
 func (u User) Update(id int64) error {
