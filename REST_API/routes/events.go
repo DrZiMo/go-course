@@ -3,7 +3,6 @@ package routes
 import (
 	"net/http"
 	"rest_api/models"
-	"rest_api/utils"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -44,30 +43,8 @@ func getEventById(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Not authorized",
-		})
-
-		return
-	}
-
-	userId, err := utils.VerifyToken(token)
-
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Not authorized",
-		})
-
-		return
-	}
-
 	var event models.Event
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -77,7 +54,8 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	event.UserID = int(userId)
+	userId := context.GetInt64("userId")
+	event.UserID = userId
 
 	err = event.Save()
 
@@ -90,29 +68,6 @@ func createEvent(context *gin.Context) {
 }
 
 func updateEvent(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Not authorized - Header",
-		})
-
-		return
-	}
-
-	_, err := utils.VerifyToken(token)
-
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Not authorized - invalid token",
-			"err":     err.Error(),
-		})
-
-		return
-	}
-
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
 	if err != nil {
@@ -167,28 +122,6 @@ func updateEvent(context *gin.Context) {
 }
 
 func deleteEvent(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Not authorized",
-		})
-
-		return
-	}
-
-	_, err := utils.VerifyToken(token)
-
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"ok":      false,
-			"message": "Not authorized",
-		})
-
-		return
-	}
-
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
 	if err != nil {

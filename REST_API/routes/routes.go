@@ -1,6 +1,10 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"rest_api/middleware"
+
+	"github.com/gin-gonic/gin"
+)
 
 func RegisterServer(server *gin.Engine) {
 	// User
@@ -14,7 +18,7 @@ func RegisterServer(server *gin.Engine) {
 	// Event
 	server.GET("/events", getEvents)
 	server.GET("/events/:id", getEventById)
-	server.POST("/events", createEvent)
-	server.PUT("/events/:id", updateEvent)
-	server.DELETE("/events/:id", deleteEvent)
+	server.POST("/events", middleware.Authenticate, createEvent)
+	server.PUT("/events/:id", middleware.Authenticate, updateEvent)
+	server.DELETE("/events/:id", middleware.Authenticate, deleteEvent)
 }
