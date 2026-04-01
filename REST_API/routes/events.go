@@ -153,6 +153,15 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
+	if event.ID != context.GetInt64("userId") {
+		context.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"Message": "Not authorized to delete event.",
+		})
+
+		return
+	}
+
 	err = event.Delete(eventId)
 
 	if err != nil {
