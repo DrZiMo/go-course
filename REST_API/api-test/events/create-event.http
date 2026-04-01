@@ -1,8 +1,9 @@
 POST http://localhost:8080/events
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZXhwIjoxNzc1MDc0MDM1LCJ1c2VySWQiOjJ9.dhuRIjpMf-fNH07QC4nbOdEfvqMWp7XiME_XBNMsqdI
 
 {
-    "name": "Hackathon",
-    "description": "This is just a hackathon for developers in the world",
+    "name": "New Event from user 2",
+    "description": "This is just a event for developers in the world",
     "location": "Hargeisa"
 }

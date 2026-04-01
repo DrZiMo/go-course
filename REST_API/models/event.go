@@ -14,10 +14,10 @@ type Event struct {
 	UserID      int
 }
 
-func (e Event) Save() error {
+func (e *Event) Save() error {
 	query := `
-	INSERT INTO events (name, description, location, dateTime, user_id)
-	VALUES (?, ?, ?, ?, ?)
+	INSERT INTO events (name, description, location, dateTime)
+	VALUES (?, ?, ?, ?)
 	`
 	stmt, err := db.DB.Prepare(query)
 
@@ -27,7 +27,7 @@ func (e Event) Save() error {
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(e.Name, e.Description, e.Location, e.DateTime, e.UserID)
+	result, err := stmt.Exec(e.Name, e.Description, e.Location, e.DateTime)
 
 	if err != nil {
 		return err
