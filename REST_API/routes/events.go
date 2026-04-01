@@ -60,7 +60,7 @@ func createEvent(context *gin.Context) {
 	err = event.Save()
 
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"ok": false, "message": "Couldn't save event. Try again later"})
+		context.JSON(http.StatusInternalServerError, gin.H{"ok": false, "message": "Couldn't save event. Try again later", "err": err.Error()})
 		return
 	}
 
@@ -79,12 +79,21 @@ func updateEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventById(eventId)
+	event, err := models.GetEventById(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"ok":      false,
 			"Message": "Couldn't fetch the event",
+		})
+
+		return
+	}
+
+	if event.ID != context.GetInt64("userId") {
+		context.JSON(http.StatusUnauthorized, gin.H{
+			"ok":      false,
+			"Message": "Not authorized to update event.",
 		})
 
 		return
