@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+type application struct {
+	errorLog *log.Logger
+	infoLog  *log.Logger
+}
+
 func main() {
 	mux := http.NewServeMux()
 
