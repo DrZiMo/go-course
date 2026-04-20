@@ -1,19 +1,18 @@
 package main
 
 import (
-	"errors"
 	"net/http"
 	"time"
 )
 
 func (app *application) Serve() error {
 	server := http.Server{
-		Addr: "8080",
+		Addr:        "8080",
 		ReadTimeout: 2 * time.Second,
-		Handler: app.routes()
+		Handler:     app.routes(),
 	}
 
-	return http.ListenAndServe(":8080", app.mux)
+	return server.ListenAndServe()
 }
 
 func (app *application) routes() http.Handler {

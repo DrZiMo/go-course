@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 )
 
@@ -14,7 +13,6 @@ type application struct {
 }
 
 func main() {
-	mux := http.NewServeMux()
 	db, err := ConnectToDB("api.db")
 	if err != nil {
 		log.Fatal(err)
