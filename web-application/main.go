@@ -11,7 +11,6 @@ type application struct {
 	errorLog *log.Logger
 	infoLog  *log.Logger
 	userRepo UserRepository
-	mux      *http.ServeMux
 }
 
 func main() {
@@ -27,7 +26,6 @@ func main() {
 		errorLog: log.New(os.Stderr, "ERROR\t", log.Ltime|log.LstdFlags|log.Lmicroseconds|log.Lshortfile),
 		infoLog:  log.New(os.Stderr, "INFO\t", log.Ltime|log.LstdFlags),
 		userRepo: NewSQLRepository(db),
-		mux:      mux,
 	}
 
 	// mux.HandleFunc("/", home)
@@ -35,7 +33,6 @@ func main() {
 	// mux.HandleFunc("/contact", contact)
 
 	fmt.Println("Listening to port 8080 ...")
-	app.mount(mux)
 	if err := app.Serve(); err != nil {
 		log.Fatal(err)
 	}
